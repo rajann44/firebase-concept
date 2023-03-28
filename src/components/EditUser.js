@@ -1,7 +1,15 @@
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { database } from "../firebase/firebaseConfigApp";
+import { database, usersTable } from "../firebase/firebaseConfigApp";
 
 const EditUser = () => {
   const { id } = useParams();
@@ -24,7 +32,7 @@ const EditUser = () => {
       const identifiedUser = doc(database, "users", id);
       const userDataFromDB = await getDoc(identifiedUser);
       setUpdateFormData(userDataFromDB.data());
-      console.log("Data populdated successfully :)");
+      console.log("Data populated successfully :)");
     } catch (error) {
       console.log("Error while populating data" + error);
     }
@@ -53,6 +61,30 @@ const EditUser = () => {
       await deleteDoc(doc(database, "users", id));
       console.log("Delete Successful");
       navigate("/user");
+    } catch (error) {
+      console.log("Error while deleting user: " + error);
+    }
+  };
+
+  //DELETING DATA FROM DB USING WHERE
+  const deleteUserUsingWhere = async () => {
+    console.log("Deleting User Started with 'Where' query");
+    try {
+      //Example to fetch data using where ==
+      const queryResult = query(
+        usersTable,
+        where("name", "==", updateFormData.name)
+      );
+      console.log("Result using where: " + queryResult);
+      const querySnapshot = await getDocs(queryResult);
+      console.log(querySnapshot);
+      querySnapshot.forEach(async (singleResult) => {
+        console.log(singleResult.data().name);
+        console.log(singleResult.data().email);
+        await deleteDoc(doc(database, "users", singleResult.data().email));
+        console.log("Delete Successful for" + singleResult.data().email);
+        navigate("/user");
+      });
     } catch (error) {
       console.log("Error while deleting user: " + error);
     }
@@ -112,6 +144,13 @@ const EditUser = () => {
         onClick={deleteUser}
         type="button"
         className="btn btn-danger mx-3"
+      >
+        Delete
+      </button>
+      <button
+        onClick={deleteUserUsingWhere}
+        type="button"
+        className="btn btn-warning mx-3"
       >
         Delete
       </button>
