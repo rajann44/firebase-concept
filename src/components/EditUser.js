@@ -1,10 +1,11 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { database } from "../firebase/firebaseConfigApp";
 
 const EditUser = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [updateFormData, setUpdateFormData] = useState({
     name: "",
@@ -17,6 +18,7 @@ const EditUser = () => {
     getData();
   }, []);
 
+  //FETCHING DATA FROM DB
   async function getData() {
     try {
       const identifiedUser = doc(database, "users", id);
@@ -28,6 +30,7 @@ const EditUser = () => {
     }
   }
 
+  //UPDATING DATA TO DB
   const updateUser = async () => {
     console.log("Update Form");
     try {
@@ -40,6 +43,18 @@ const EditUser = () => {
       console.log("Data updated to DB successfully!!");
     } catch (error) {
       console.log("Error while updating data" + error);
+    }
+  };
+
+  //DELETING DATA FROM DB
+  const deleteUser = async () => {
+    console.log("Deleting User Started");
+    try {
+      await deleteDoc(doc(database, "users", id));
+      console.log("Delete Successful");
+      navigate("/user");
+    } catch (error) {
+      console.log("Error while deleting user: " + error);
     }
   };
 
@@ -92,6 +107,13 @@ const EditUser = () => {
       </div>
       <button onClick={updateUser} type="button" className="btn btn-success">
         Update
+      </button>
+      <button
+        onClick={deleteUser}
+        type="button"
+        className="btn btn-danger mx-3"
+      >
+        Delete
       </button>
     </div>
   );

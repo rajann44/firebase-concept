@@ -1,8 +1,11 @@
 import { addDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { usersTable } from "../firebase/firebaseConfigApp";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [registerFormData, setRegisterForm] = useState({
     name: "",
     email: "",
@@ -13,6 +16,7 @@ const Register = () => {
     console.log(registerFormData);
     try {
       await addDoc(usersTable, registerFormData);
+      navigate("/user");
       console.log("User Registered");
     } catch (error) {
       console.log("Error while Registration " + error);
