@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import User from "./components/User";
+import EditUser from "./components/EditUser";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home></Home>}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
         <Route path="/user" element={<User></User>}></Route>
+        <Route path="/user/edit/:id" element={<EditUser></EditUser>}></Route>
       </Routes>
     </div>
   );
