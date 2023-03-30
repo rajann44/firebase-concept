@@ -7,9 +7,12 @@ import {
 import app from "../firebase/firebaseConfigApp";
 import { customersTable } from "../firebase/firebaseConfigApp";
 import { addDoc } from "firebase/firestore";
-
+import { useNavigate } from "react-router-dom";
 const auth = getAuth(app);
+
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [signupdata, setSignupdata] = useState({
     email: "",
     password: "",
@@ -47,7 +50,7 @@ const Signup = () => {
         setOTPStatus(true);
       })
       .catch((error) => {
-        console.log("OTP Not Sent" + error);
+        console.log("OTP Not Sent " + error);
       });
   };
 
@@ -58,9 +61,10 @@ const Signup = () => {
   const verifyOTP = () => {
     try {
       window.confirmationResult.confirm(OTP).then((result) => {
+        console.log("OTP validation, successful!");
         uploadCustomerToDB();
         console.log("User uploaded, registration successful!");
-        //navigate('/login')
+        navigate("/login");
       });
     } catch (error) {
       console.log("Error while registration " + error);
@@ -76,7 +80,6 @@ const Signup = () => {
             type="number"
             className="form-control"
             id="number"
-            value={OTP}
             onChange={(e) => setOTP(e.target.value)}
           />
           <button

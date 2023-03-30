@@ -27,6 +27,16 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to={"/customers"}>
+                  Customers
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/login"}>
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to={"/register"}>
                   Register (Create)
                 </Link>
