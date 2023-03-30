@@ -3,8 +3,9 @@ import { getDocs, query, where } from "firebase/firestore";
 import { customersTable } from "../firebase/firebaseConfigApp";
 import { Appstate } from "../App";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
-const Login = () => {
+const CustomerLogin = () => {
   const navigate = useNavigate();
   const useAppstate = useContext(Appstate);
   const [loginForm, setLoginForm] = useState({
@@ -26,7 +27,8 @@ const Login = () => {
       const rowResult = await getDocs(queryOutput);
       rowResult.forEach((dataFromTable) => {
         const data = dataFromTable.data();
-        if (loginForm.password == data.password) {
+        //if (loginForm.password == data.password) {
+        if (bcrypt.compareSync(loginForm.password, data.password)) {
           useAppstate.setLogin(true); //Passed this state to App.js
           console.log("Login successful!!");
           navigate("/customers");
@@ -42,7 +44,9 @@ const Login = () => {
   return (
     <div className="container w-25 p-3 padding-x-lg bg-dark text-light ">
       <div className="mb-3">
-        <label className="form-label">Email address</label>
+        <label className="form-label">
+          Email address (Applicable to Customers)
+        </label>
         <input
           type="email"
           className="form-control"
@@ -73,4 +77,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default CustomerLogin;

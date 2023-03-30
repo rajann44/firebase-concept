@@ -3,8 +3,8 @@ import { getFirestore, collection } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  //apiKey: process.env.FIREBASE_APIKEY,
-  apiKey: "AIzaSyCFdkrQCRYMAn4TPUJMQ-Dt6-Bz1wglZR0",
+  apiKey: process.env.FIREBASE_APIKEY,
+  //apiKey: "AIzaSyCFdkrQCRYMAn4TPUJMQ-Dt6-Bz1wglZR0",
   authDomain: "fir-concept-71fdf.firebaseapp.com",
   projectId: "fir-concept-71fdf",
   storageBucket: "fir-concept-71fdf.appspot.com",

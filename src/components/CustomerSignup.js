@@ -8,9 +8,11 @@ import app from "../firebase/firebaseConfigApp";
 import { customersTable } from "../firebase/firebaseConfigApp";
 import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
+
 const auth = getAuth(app);
 
-const Signup = () => {
+const CustomerSignup = () => {
   const navigate = useNavigate();
 
   const [signupdata, setSignupdata] = useState({
@@ -21,10 +23,6 @@ const Signup = () => {
 
   const [OTP, setOTP] = useState();
   const [OTPStatus, setOTPStatus] = useState(false);
-
-  const handleSignup = async () => {
-    console.log(signupdata);
-  };
 
   const generateRecaptha = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -55,7 +53,9 @@ const Signup = () => {
   };
 
   const uploadCustomerToDB = async () => {
-    await addDoc(customersTable, { signupdata });
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(signupdata.password, salt);
+    await addDoc(customersTable, { ...signupdata, password: hash });
   };
 
   const verifyOTP = () => {
@@ -133,4 +133,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default CustomerSignup;
