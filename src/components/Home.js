@@ -8,7 +8,7 @@ const Home = () => {
       </div>
       <div className="d-flex justify-content-center my-3">
         <ul class="list-group">
-          <li class="list-group-item active">Create User</li>
+          <li class="list-group-item active">Create/Register User</li>
           <li class="list-group-item">Login with User</li>
           <li class="list-group-item">OTP Auth</li>
           <li class="list-group-item">Bcrypt</li>
