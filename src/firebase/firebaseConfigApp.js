@@ -3,7 +3,7 @@ import { getFirestore, collection } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_APIKEY,
+  apiKey: "AIzaSyCFdkrQCRYMAn4TPUJMQ-Dt6-Bz1wglZR0",
   authDomain: "fir-concept-71fdf.firebaseapp.com",
   projectId: "fir-concept-71fdf",
   storageBucket: "fir-concept-71fdf.appspot.com",
@@ -15,5 +15,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const database = getFirestore(app);
 export const usersTable = collection(database, "users");
+export const customersTable = collection(database, "customers");
 
 export default app;

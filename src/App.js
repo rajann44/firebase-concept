@@ -5,19 +5,28 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import User from "./components/User";
 import EditUser from "./components/EditUser";
+import Signup from "./components/Signup";
+import { createContext, useState } from "react";
+
+const Appstate = createContext();
 
 function App() {
+  const [login, setLogin] = useState(false);
   return (
-    <div className="App">
-      <Navbar></Navbar>
-      <Routes>
-        <Route path="/" element={<Home></Home>}></Route>
-        <Route path="/register" element={<Register></Register>}></Route>
-        <Route path="/user" element={<User></User>}></Route>
-        <Route path="/user/edit/:id" element={<EditUser></EditUser>}></Route>
-      </Routes>
-    </div>
+    <Appstate.Provider value={(login, setLogin)}>
+      <div className="App">
+        <Navbar></Navbar>
+        <Routes>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/signup" element={<Signup></Signup>}></Route>
+          <Route path="/register" element={<Register></Register>}></Route>
+          <Route path="/user" element={<User></User>}></Route>
+          <Route path="/user/edit/:id" element={<EditUser></EditUser>}></Route>
+        </Routes>
+      </div>
+    </Appstate.Provider>
   );
 }
 
 export default App;
+export { Appstate };
