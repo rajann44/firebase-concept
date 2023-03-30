@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { customersTable } from "../firebase/firebaseConfigApp";
 import { Appstate } from "../App";
 import { getDocs } from "firebase/firestore";
+import { Link } from "react-router-dom";
 
 const Customers = () => {
   const [customer, setCustomer] = useState([]);
@@ -33,15 +34,26 @@ const Customers = () => {
 
   return (
     <div className="container my-3 w-50">
-      <ul className="list-group">
-        {customer.map((u, index) => {
-          return (
-            <li className="list-group-item" key={index}>
-              {u.email}
-            </li>
-          );
-        })}
-      </ul>
+      {useAppstate.login ? (
+        <ul className="list-group">
+          {customer.map((u, index) => {
+            return (
+              <li className="list-group-item" key={index}>
+                {u.email}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div>
+          Please login to see customers list<br></br>
+          <button type="button" className="btn btn-primary">
+            <Link className="nav-link" aria-current="page" to={"/login"}>
+              Login
+            </Link>
+          </button>
+        </div>
+      )}
     </div>
   );
 };
